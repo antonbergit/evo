@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_employee_form_inherit" model="ir.ui.view">
+		<field name="name">hr.employee.form.inherit</field>
+		<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="hr.view_employee_form"/>
+		<field name="arch" type="xml">
+			<!-- Remove fields from their current location -->
+			<field name="work_location" position="replace"/>
+			<field name="tz" position="replace"/>
+			<!-- Adding a new field structure -->
+			<xpath expr="//sheet/group" position="replace">
+				<group>
+					<group>
+						<field name="work_mobile"/>
+						<field name="work_phone"/>
+						<field name="work_email"/>
+						<field name="work_address"/>
+					</group>
+					<group>
+						<field name="company_id" options="{'no_create': True}"/>
+						<field name="tz"/>
+						<field name="pension_fund_tax"/>
+					</group>
+				</group>
+			</xpath>
+			<!-- Hiding standard fields -->
+			<field name="department_id" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+			<field name="job_id" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+			<field name="parent_id" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+			<field name="coach_id" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+		</field>
+	</record>
+</odoo>
