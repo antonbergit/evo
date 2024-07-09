@@ -15,21 +15,26 @@ Long description of module's purpose
     # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Uncategorized',
-    'version': '1.1',
+    'version': '1.9',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'hr', 'hr_recruitment', 'hr_skills', 'hr_contract'],
 
     # always loaded
     'data': [
+        'security/ir.model.access.csv',
         'views/hr_employee_views.xml',
-        # 'security/ir.model.access.csv',
-        # 'views/views.xml',
-        
+        'views/employee_position_views.xml',
+        'views/organization_chart_template.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'employee_position/static/src/js/organization_chart.js',
+        ],
+    },
     # only loaded in demonstration mode
     'demo': [
-        'demo/demo.xml',
+        # 'demo/demo.xml',
     ],
     'application': True,
  	'installable': True,

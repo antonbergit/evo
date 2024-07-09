@@ -1,42 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<record id="view_employee_form_inherit" model="ir.ui.view">
-		<field name="name">hr.employee.form.inherit</field>
-		<field name="model">hr.employee</field>
-		<field name="inherit_id" ref="hr.view_employee_form"/>
-		<field name="arch" type="xml">
-			<!-- Remove fields from their current location -->
-			<field name="work_location" position="replace"/>
-			<field name="tz" position="replace"/>
-			<!-- Adding a new field structure -->
-			<xpath expr="//sheet/group" position="replace">
-				<group>
-					<group>
-						<field name="work_mobile"/>
-						<field name="work_phone"/>
-						<field name="work_email"/>
-						<field name="work_address"/>
-					</group>
-					<group>
-						<field name="company_id" options="{'no_create': True}"/>
-						<field name="tz"/>
-						<field name="pension_fund_tax"/>
-					</group>
-				</group>
-			</xpath>
-			<!-- Hiding standard fields -->
-			<field name="department_id" position="attributes">
-				<attribute name="invisible">1</attribute>
-			</field>
-			<field name="job_id" position="attributes">
-				<attribute name="invisible">1</attribute>
-			</field>
-			<field name="parent_id" position="attributes">
-				<attribute name="invisible">1</attribute>
-			</field>
-			<field name="coach_id" position="attributes">
-				<attribute name="invisible">1</attribute>
-			</field>
-		</field>
-	</record>
+  
+    <record id="view_employee_form" model="ir.ui.view">
+        <field name="name">hr.employee.form.custom</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            
+            <field name="work_phone" position="before">
+                <field name="work_address_id"/>
+            </field>
+            
+            <field name="work_email" position="before">
+                <field name="tz"/>
+            </field>
+            
+            <field name="work_location" position="before">
+                <field name="pension_fund_tax"/>
+            </field>
+            
+            <field name="department_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="job_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="parent_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="coach_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_employee_form_positions" model="ir.ui.view">
+        <field name="name">hr.employee.form.positions</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@string='Резюме']" position="before">
+                <page string="Посади">
+                    <field name="position_ids">
+                        <tree>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="job_id"/>
+                            <field name="department_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_form_organization_chart" model="ir.ui.view">
+        <field name="name">hr.employee.form.organization.chart</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='organization_chart']" position="inside">
+                <div>
+                    <h3>EVO</h3>
+                    <t t-foreach="record.child_ids" t-as="child">
+                        <div>
+                            <t t-esc="child.name"/>
+                            <t t-esc="child.job_id.name"/>
+                        </div>
+                    </t>
+                </div>
+            </xpath>
+        </field>
+    </record>
 </odoo>

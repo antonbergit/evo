@@ -1,0 +1,51 @@
+<odoo>
+    <record id="view_employee_position_form" model="ir.ui.view">
+        <field name="name">employee.position.form</field>
+        <field name="model">employee.position</field>
+        <field name="arch" type="xml">
+            <form string="Employee Position">
+                <group>
+                    <group string="Position">
+                        <field name="department_id"/>
+                        <field name="manager_id"/>
+                        <field name="coach_id"/>
+                        <field name="job_id"/>
+                        <field name="employee_type"/>
+                        <field name="current_contract_id"/>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                    </group>
+                    <group string="Approvers">
+                        <field name="vacation_supervisor_id"/>
+                        <field name="vacation_hr_manager_id"/>
+                        <field name="expenses_manager_id"/>
+                    </group>
+                    <group string="Work Information">
+                        <field name="work_location_id"/>
+                        <field name="working_hours" readonly="1"/>
+                    </group>
+                    <group string="Vacation">
+                        <field name="vacation_days_total" readonly="1"/>
+                        <field name="vacation_days_used" readonly="1"/>
+                        <field name="vacation_days_rest" readonly="1"/>
+                        <field name="note"/>
+                    </group>
+                    <group string="Organization Chart">
+                        <div t-if="record.parent_id">
+                            <div>
+                                <t t-esc="record.parent_id.name"/>
+                                <t t-esc="record.parent_id.job_id.name"/>
+                            </div>
+                            <t t-foreach="record.child_ids" t-as="child">
+                                <div>
+                                    <t t-esc="child.name"/>
+                                    <t t-esc="child.job_id.name"/>
+                                </div>
+                            </t>
+                        </div>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>
