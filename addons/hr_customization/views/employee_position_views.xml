@@ -11,6 +11,13 @@
                         <field name="coach_id"/>
                         <field name="job_id"/>
                         <field name="employee_type"/>
+                        <!--
+                            TODO: You use domain domain="[('employee_id', '=', employee_id), ('job_id', '=', job_id)]"
+                                for field 'current_contract_id' in python reference - thus you have to place
+                                both fields 'employee_id' and 'job_id' in view.
+                                You may make it invisible, if necessary.
+                        -->
+                        <field name="employee_id" invisible="1"/>
                         <field name="current_contract_id"/>
                         <field name="date_start"/>
                         <field name="date_end"/>
@@ -25,12 +32,18 @@
                         <field name="working_hours" readonly="1"/>
                     </group>
                     <group string="Vacation">
+                        <!--
+                            TODO: You used next three fields in employee.position related view
+                                but had declared them in model hr.employee
                         <field name="vacation_days_total" readonly="1"/>
                         <field name="vacation_days_used" readonly="1"/>
                         <field name="vacation_days_rest" readonly="1"/>
                         <field name="note"/>
+                        -->
                     </group>
                     <group string="Organization Chart">
+                        <!--
+                            TODO: A 't-esc', 't-if' and <t/> tags are part of OWL - not supported in arch section
                         <div t-if="record.parent_id">
                             <div>
                                 <t t-esc="record.parent_id.name"/>
@@ -43,6 +56,7 @@
                                 </div>
                             </t>
                         </div>
+                        -->
                     </group>
                 </group>
             </form>

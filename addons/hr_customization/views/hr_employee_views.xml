@@ -13,8 +13,14 @@
             <field name="work_email" position="before">
                 <field name="tz"/>
             </field>
-            
-            <field name="work_location" position="before">
+
+            <!--
+                TODO: Here you use field name 'work_location',
+                      but in hr_employee.py there is no field with this name.
+                      The correct field name is 'work_location_id'
+            -->
+            <!--field name="work_location" position="before"-->
+            <field name="work_location_id" position="before">
                 <field name="pension_fund_tax"/>
             </field>
             
@@ -36,10 +42,24 @@
     <record id="view_employee_form_positions" model="ir.ui.view">
         <field name="name">hr.employee.form.positions</field>
         <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <!--
+            TODO: Wrong inherit_id reference - the page Resume located in
+                hr_skills.hr_employee_view_form
+        -->
+        <!--field name="inherit_id" ref="hr.view_employee_form"/-->
+        <field name="inherit_id" ref="hr_skills.hr_employee_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@string='Резюме']" position="before">
-                <page string="Посади">
+            <!--
+                TODO: Couple of general advises:
+                        1. Newer use '@string' as xpath selector - use name/id instead
+                        2. There are no cyrillic in any XML in origin,
+                            in live interface you see just translations - always switch
+                            EN interface when seek for xpath expression selectors
+            -->
+            <!--xpath expr="//page[@string='Резюме']" position="before"-->
+            <xpath expr="//page[@name='skills_resume']" position="before">
+                <!--page string="Посади"-->
+                <page name="positions" string="Positions">
                     <field name="position_ids">
                         <tree>
                             <field name="date_start"/>
@@ -56,17 +76,26 @@
     <record id="view_employee_form_organization_chart" model="ir.ui.view">
         <field name="name">hr.employee.form.organization.chart</field>
         <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <!--
+            TODO: Wrong inherit_id reference - the Organization Chart section located in
+                hr_org_chart.hr_employee_view_form_inherit_org_chart
+        -->
+        <!--field name="inherit_id" ref="hr.view_employee_form"/-->
+        <field name="inherit_id" ref="hr_org_chart.hr_employee_view_form_inherit_org_chart"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='organization_chart']" position="inside">
+            <!--xpath expr="//group[@name='organization_chart']" position="inside"-->
+            <xpath expr="//div[@id='o_work_employee_main']" position="inside">
                 <div>
                     <h3>EVO</h3>
+                    <!--
+                        TODO: A 't-foreach' and <t/> tags are part of OWL - not supported in arch section
                     <t t-foreach="record.child_ids" t-as="child">
                         <div>
                             <t t-esc="child.name"/>
                             <t t-esc="child.job_id.name"/>
                         </div>
                     </t>
+                    -->
                 </div>
             </xpath>
         </field>

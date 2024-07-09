@@ -16,6 +16,8 @@ class HrEmployee(models.Model):
 
     position_ids = fields.One2many('employee.position', 'employee_id', string='Positions')
 
+    # TODO: You had declared next three fields in model hr.employee
+    #   but used them in employee.position related view
     vacation_days_total = fields.Integer(string='Total Vacation, days', readonly=True)
     vacation_days_used = fields.Integer(string='Used Vacation, days', readonly=True)
     vacation_days_rest = fields.Integer(string='Rest of Vacation, days', readonly=True)
